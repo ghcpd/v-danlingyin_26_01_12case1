@@ -1,0 +1,66 @@
+{
+  "summary": {
+    "total_missing_items": 7,
+    "high": 3,
+    "medium": 2,
+    "low": 2
+  },
+  "details": [
+    {
+      "id": 1,
+      "missing_doc_type": "Installation / Setup Guide",
+      "severity": "High",
+      "description": "No instructions about runtime requirements or how to ensure `fetch` is available (browser vs Node).",
+      "why_required": "The code uses the global `fetch`; without guidance developers may run into runtime failures on Node or other environments that lack `fetch`.",
+      "code_evidence": "input.ts: uses `fetch(url)` directly (line: const res = await fetch(url);)"
+    },
+    {
+      "id": 2,
+      "missing_doc_type": "Usage Examples",
+      "severity": "High",
+      "description": "No examples showing how to call `fetchWithRetry`, handle errors, or parse responses.",
+      "why_required": "Examples reduce trial-and-error and show real usage patterns (defaults, error handling, parsing JSON).",
+      "code_evidence": "input.ts: function signature and behavior (Promise<string>) and use of `res.text()` implies returned value is raw text."
+    },
+    {
+      "id": 3,
+      "missing_doc_type": "API Documentation",
+      "severity": "High",
+      "description": "No API reference explaining parameters (`RetryOptions`), defaults, return type, and thrown errors.",
+      "why_required": "Developers need exact parameter names, default values, and error contract to integrate correctly.",
+      "code_evidence": "input.ts: `RetryOptions` interface and default assignments: `const retries = options?.retries ?? 3; const delayMs = options?.delayMs ?? 1000;`"
+    },
+    {
+      "id": 4,
+      "missing_doc_type": "Error handling / Edge cases",
+      "severity": "Medium",
+      "description": "No explanation of how non-OK responses are handled, what errors are thrown, or behavior when retries are exhausted.",
+      "why_required": "Proper error handling expectations are necessary for callers to implement retry/fallback logic correctly.",
+      "code_evidence": "input.ts: `if (!res.ok) { throw new Error(\"Request failed\"); }` and `if (attempt >= retries) { throw err; }`"
+    },
+    {
+      "id": 5,
+      "missing_doc_type": "Configuration Explanation",
+      "severity": "Medium",
+      "description": "No detailed explanation of `retries` and `delayMs` semantics (e.g., does `retries` count attempts or retries?).",
+      "why_required": "Misunderstanding semantics can lead to incorrect retry policies (e.g., off-by-one in attempts).",
+      "code_evidence": "input.ts: `while (attempt < retries)` and `attempt++` shows how `retries` is applied."
+    },
+    {
+      "id": 6,
+      "missing_doc_type": "Project Overview / Scope",
+      "severity": "Low",
+      "description": "README only contains a one-line placeholder; lacks an explicit summary, scope, and limitations.",
+      "why_required": "A clear overview helps developers quickly decide whether the module fits their needs.",
+      "code_evidence": "README.md: only 'Utility functions for network requests.'"
+    },
+    {
+      "id": 7,
+      "missing_doc_type": "License / Testing Notes",
+      "severity": "Low",
+      "description": "No license file present and no notes about tests or how to add them.",
+      "why_required": "License clarifies reuse; testing notes help contributors validate behavior without modifying code.",
+      "code_evidence": "Repository: no LICENSE file; no test files found."
+    }
+  ]
+}
