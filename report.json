@@ -1,0 +1,50 @@
+{
+  "summary": {
+    "total_missing_items": 5,
+    "high": 2,
+    "medium": 2,
+    "low": 1
+  },
+  "details": [
+    {
+      "id": 1,
+      "missing_doc_type": "Project overview",
+      "severity": "Low",
+      "description": "A short repository-level explanation of purpose and contents is missing; the existing README only contained a title.",
+      "why_required": "Helps developers quickly understand what the package contains and where to find the implementation.",
+      "code_evidence": "README.md contained only a title; source file: `input.ts` exports a single helper `fetchWithRetry`."
+    },
+    {
+      "id": 2,
+      "missing_doc_type": "Setup / runtime requirements",
+      "severity": "High",
+      "description": "No guidance about the runtime requirement for a global `fetch` implementation.",
+      "why_required": "The code calls the global `fetch`. Without noting this, developers running the code in older Node.js versions may encounter runtime errors.",
+      "code_evidence": "`input.ts` calls `fetch(url)` directly (no polyfill or import)."
+    },
+    {
+      "id": 3,
+      "missing_doc_type": "API description",
+      "severity": "High",
+      "description": "There was no detailed API reference describing `RetryOptions`, default values, return type, and failure behavior.",
+      "why_required": "Developers need to know the available options, defaults, return type, and how failures are signaled in order to call the function correctly.",
+      "code_evidence": "Signature: `export async function fetchWithRetry(url: string, options?: RetryOptions): Promise<string>`; defaults: `const retries = options?.retries ?? 3; const delayMs = options?.delayMs ?? 1000;`; on non-OK responses the code throws `new Error(\"Request failed\")` and returns `res.text()` on success."
+    },
+    {
+      "id": 4,
+      "missing_doc_type": "Usage examples",
+      "severity": "Medium",
+      "description": "No example showing how to import and call `fetchWithRetry` (or how to handle failures).",
+      "why_required": "A short example reduces trial-and-error and shows expected patterns (async/await + try/catch).",
+      "code_evidence": "Only `input.ts` exists with the exported function; callers must import it and handle the returned Promise<string>."
+    },
+    {
+      "id": 5,
+      "missing_doc_type": "Error handling / edge cases",
+      "severity": "Medium",
+      "description": "The README did not explain how non-OK responses are treated, what is retried, or which features are not implemented (timeouts, backoff, cancellation).",
+      "why_required": "Clarifies what the helper does and does not provide so developers can decide whether to compose additional logic around it.",
+      "code_evidence": "The implementation treats non-OK responses as failures (`if (!res.ok) { throw new Error(\"Request failed\") }`), waits `delayMs` between attempts, and does not implement timeouts or cancellation."
+    }
+  ]
+}
