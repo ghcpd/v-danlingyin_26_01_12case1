@@ -1,0 +1,82 @@
+{
+  "summary": {
+    "total_missing_items": 9,
+    "high": 5,
+    "medium": 3,
+    "low": 1
+  },
+  "details": [
+    {
+      "id": 1,
+      "missing_doc_type": "Project overview",
+      "severity": "Medium",
+      "description": "A short project summary explaining purpose, scope, and public surface (what this tiny module provides).",
+      "why_required": "Without an overview a developer must read the source to understand intent and scope; this increases onboarding time and the chance of misuse.",
+      "code_evidence": "Repository exports a single function: `export async function fetchWithRetry(...)` (no other public API)."
+    },
+    {
+      "id": 2,
+      "missing_doc_type": "Environment / Installation requirements",
+      "severity": "High",
+      "description": "No documentation states runtime requirements (global `fetch` availability) or how to make the code run in Node.js environments.",
+      "why_required": "The implementation calls the global `fetch`; in environments without it the code will fail at runtime. Developers need to know required Node versions or that a polyfill is necessary.",
+      "code_evidence": "Source calls `fetch(url)` directly — see `const res = await fetch(url);` in `fetchWithRetry` (no mechanism to inject a fetch implementation)."
+    },
+    {
+      "id": 3,
+      "missing_doc_type": "Usage examples",
+      "severity": "High",
+      "description": "No examples showing typical usage, error handling, or Node-specific guidance are present.",
+      "why_required": "Examples demonstrate correct import, invocation, and error handling; without them developers will rely on trial-and-error.",
+      "code_evidence": "Public API: `fetchWithRetry(url: string, options?: RetryOptions): Promise<string>` (signature alone does not show error patterns or example usage)."
+    },
+    {
+      "id": 4,
+      "missing_doc_type": "API description (parameters, defaults, return, errors)",
+      "severity": "High",
+      "description": "No parameter defaults, return value details, or error semantics are documented.",
+      "why_required": "Callers must know defaults (`retries`, `delayMs`), what is returned (`string`), and what errors to expect so they can write correct handling logic.",
+      "code_evidence": "Defaults in source: `const retries = options?.retries ?? 3;` and `const delayMs = options?.delayMs ?? 1000;`. Return is `res.text()` and errors include `throw new Error(\"Request failed\")` and re-throw of caught errors."
+    },
+    {
+      "id": 5,
+      "missing_doc_type": "Configuration explanation (RetryOptions)",
+      "severity": "High",
+      "description": "Behavior and valid ranges for `RetryOptions` are not described (e.g. effect of `retries: 0`, acceptable `delayMs`).",
+      "why_required": "Incorrect option values may produce surprising behavior (the code contains an "unreachable" throw if the retry loop is skipped).",
+      "code_evidence": "`while (attempt < retries) { ... }` and final `throw new Error(\"Unreachable\");` indicate unexpected behavior when `retries` <= 0."
+    },
+    {
+      "id": 6,
+      "missing_doc_type": "Error handling & edge-cases",
+      "severity": "High",
+      "description": "No documentation explains which errors are thrown, which are retried, or describes the behavior on non-OK HTTP responses.",
+      "why_required": "Callers need to distinguish retriable from terminal errors and implement correct retry/backoff or reporting logic.",
+      "code_evidence": "On non-OK responses the code `throw new Error(\"Request failed\")` is executed; network rejections are caught and retried."
+    },
+    {
+      "id": 7,
+      "missing_doc_type": "Import/build/TypeScript usage",
+      "severity": "Medium",
+      "description": "No guidance showing how to import/use the module in TypeScript or Node projects (ESM/CommonJS examples).",
+      "why_required": "Developers need quick examples for consumption in different module systems and TypeScript projects.",
+      "code_evidence": "Module is a TypeScript file (`input.ts`) exporting `fetchWithRetry`; there are no package.json or build instructions in the repository snapshot."
+    },
+    {
+      "id": 8,
+      "missing_doc_type": "Testing instructions / examples",
+      "severity": "Medium",
+      "description": "No suggestions for manual or automated tests to verify retry behavior or error handling.",
+      "why_required": "Tests or test recipes speed validation and prevent regressions when the helper is reused or modified.",
+      "code_evidence": "Retry logic exists in the implementation (`attempt`, `setTimeout`, loop) but there are no tests provided in the repository snapshot."
+    },
+    {
+      "id": 9,
+      "missing_doc_type": "Repository metadata (LICENSE / CONTRIBUTING)",
+      "severity": "Low",
+      "description": "No license, contributing guide, or maintainer/contact information in this snapshot.",
+      "why_required": "Useful for open-source consumption or when multiple engineers will maintain the file; not required for local/in-repo use.",
+      "code_evidence": "No LICENSE, CONTRIBUTING, or package metadata files present in the provided workspace snapshot."
+    }
+  ]
+}

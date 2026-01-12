@@ -1,0 +1,126 @@
+oswe-mini-m23a1s255-new    ：：
+User: Prompt:Documentation & Knowledge Evaluation — Missing Docs
+
+You are a senior technical writer and software engineer.
+
+Your task is to review the provided project files and identify missing documentation that is required for developers to correctly understand, set up, and use the project.
+
+This evaluation focuses on detecting documentation that SHOULD exist but is missing, rather than outdated or incorrect documentation.
+
+Your Responsibilities:
+
+Identify Missing Documentation
+Scan all provided files, including:
+Source code (*.ts, *.js)
+Configuration files
+Existing documentation files (if any)
+Identify documentation that is missing or insufficient, including but not limited to:
+Project overview
+Installation / setup instructions
+Usage examples
+API documentation
+Configuration explanation
+Error handling or edge cases
+For each missing documentation item, provide:
+
+Missing documentation type (e.g. Setup Guide, Usage Example, API Description)
+What information is missing
+Why this documentation is required
+Evidence from the code that proves this documentation is necessary
+Classify Severity For each missing documentation item, classify severity as:
+High:
+Developers cannot use or run the code correctly without it
+Medium:
+Developers can use the code but with confusion or trial-and-error
+Low:
+Helpful clarification but not required to use the code
+Produce Missing Documentation Generate the following files:
+README_backup.md
+
+If README.md exists → unchanged copy
+If README.md does NOT exist → explicitly state that no backup was created
+README.md
+
+A newly written documentation file that fills ALL identified documentation gaps
+Must be strictly based on existing code behavior
+Must NOT invent APIs, options, or features not present in the code
+Rules:
+
+Do NOT modify any source code
+Only add documentation
+Documentation must be accurate, concise, and developer-oriented
+Generate Documentation Audit Report (report.json)
+Use the following structure:
+
+{ "summary": { "total_missing_items": 0, "high": 0, "medium": 0, "low": 0 }, "details": [ { "id": 1, "missing_doc_type": "Usage Example", "severity": "High", "description": "", "why_required": "", "code_evidence": "" } ] }
+
+Generate Validation Evidence Produce a file named doc_validation.md containing:
+A list of missing documentation items
+The corresponding sections added to README.md
+A short explanation showing how a new developer can now:
+Understand the project
+Use the exposed APIs correctly
+Generate Reviewer README Produce AUDIT_README.md explaining:
+What was reviewed
+What documentation was missing
+What files were generated
+How reviewers can verify documentation completeness
+📌 Rules for the Model
+
+MUST NOT hallucinate features or APIs
+MUST NOT invent files that do not exist
+MUST base conclusions strictly on provided files
+MUST clearly justify why documentation is missing
+MUST keep code unchanged
+MUST keep output structured, minimal, and readable
+
+GitHub Copilot: Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-m23a1s255-new/README_backup.md)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-m23a1s255-new/README.md)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-m23a1s255-new/report.json)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-m23a1s255-new/doc_validation.md)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-m23a1s255-new/AUDIT_README.md)
+
+Done — I reviewed the repository and added the missing documentation and audit artifacts.
+
+What I changed (documentation only)
+- Created: README.md (expanded, authoritative documentation)
+- Created: README_backup.md (unchanged copy of the original README)
+- Created: report.json (structured missing-docs audit)
+- Created: doc_validation.md (mapping + validation steps)
+- Created: AUDIT_README.md (how to review / verify)
+
+Where to look (key files)
+- Primary docs: README.md
+- Audit + validation: report.json, doc_validation.md, AUDIT_README.md
+- Original README preserved at: README_backup.md
+
+Summary of missing documentation found (top items)
+- High severity: Environment / installation (global fetch), Usage examples, API reference (params/defaults/return), RetryOptions behavior, Error-handling & edge-cases.
+- Medium: Project overview, Import/TypeScript usage, Testing guidance.
+- Low: LICENSE / CONTRIBUTING metadata missing.
+
+Quick verification steps for a reviewer
+1. Read README.md — confirm it contains: Quick summary, Environment/Installation, Usage (examples), API reference, Error handling, Testing suggestions.
+2. Run the Basic example in a runtime that exposes global fetch (browser or Node 18+) and verify behavior.
+3. Confirm report.json enumerates missing items and that doc_validation.md maps each item to README sections.
+4. Confirm README_backup.md matches the original short README.
+
+If you want next:
+- I can add unit-test examples that stub global.fetch (suggested).
+- I can draft CONTRIBUTING.md or LICENSE if needed.
+
+Would you like me to add test examples or a CONTRIBUTING draft now?
+
+Made changes.
