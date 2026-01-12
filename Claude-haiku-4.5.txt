@@ -1,0 +1,159 @@
+Claude-haiku-4.5  ：：
+User: Prompt:Documentation & Knowledge Evaluation — Missing Docs
+
+You are a senior technical writer and software engineer.
+
+Your task is to review the provided project files and identify missing documentation that is required for developers to correctly understand, set up, and use the project.
+
+This evaluation focuses on detecting documentation that SHOULD exist but is missing, rather than outdated or incorrect documentation.
+
+Your Responsibilities:
+
+Identify Missing Documentation
+Scan all provided files, including:
+Source code (*.ts, *.js)
+Configuration files
+Existing documentation files (if any)
+Identify documentation that is missing or insufficient, including but not limited to:
+Project overview
+Installation / setup instructions
+Usage examples
+API documentation
+Configuration explanation
+Error handling or edge cases
+For each missing documentation item, provide:
+
+Missing documentation type (e.g. Setup Guide, Usage Example, API Description)
+What information is missing
+Why this documentation is required
+Evidence from the code that proves this documentation is necessary
+Classify Severity For each missing documentation item, classify severity as:
+High:
+Developers cannot use or run the code correctly without it
+Medium:
+Developers can use the code but with confusion or trial-and-error
+Low:
+Helpful clarification but not required to use the code
+Produce Missing Documentation Generate the following files:
+README_backup.md
+
+If README.md exists → unchanged copy
+If README.md does NOT exist → explicitly state that no backup was created
+README.md
+
+A newly written documentation file that fills ALL identified documentation gaps
+Must be strictly based on existing code behavior
+Must NOT invent APIs, options, or features not present in the code
+Rules:
+
+Do NOT modify any source code
+Only add documentation
+Documentation must be accurate, concise, and developer-oriented
+Generate Documentation Audit Report (report.json)
+Use the following structure:
+
+{ "summary": { "total_missing_items": 0, "high": 0, "medium": 0, "low": 0 }, "details": [ { "id": 1, "missing_doc_type": "Usage Example", "severity": "High", "description": "", "why_required": "", "code_evidence": "" } ] }
+
+Generate Validation Evidence Produce a file named doc_validation.md containing:
+A list of missing documentation items
+The corresponding sections added to README.md
+A short explanation showing how a new developer can now:
+Understand the project
+Use the exposed APIs correctly
+Generate Reviewer README Produce AUDIT_README.md explaining:
+What was reviewed
+What documentation was missing
+What files were generated
+How reviewers can verify documentation completeness
+📌 Rules for the Model
+
+MUST NOT hallucinate features or APIs
+MUST NOT invent files that do not exist
+MUST base conclusions strictly on provided files
+MUST clearly justify why documentation is missing
+MUST keep code unchanged
+MUST keep output structured, minimal, and readable
+
+GitHub Copilot: Optimizing tool selection...I'll analyze the project files and generate a comprehensive documentation audit with all required outputs. 
+
+Created 6 todos
+
+Let me analyze the codebase to identify all missing documentation:
+
+**Analysis of input.ts:**
+- Exports `RetryOptions` interface with optional `retries` and `delayMs` properties
+- Exports `fetchWithRetry` function with URL and options parameters
+- Default values: retries=3, delayMs=1000
+- Error handling: throws on failed requests after exhausting retries
+- Uses native fetch API
+
+**Analysis of README.md:**
+- Minimal content: only title and single-line description
+- Missing: installation, usage examples, API docs, configuration, error handling 
+
+Starting: *Generate report.json audit report* (2/6)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/Claude-haiku-4.5/report.json)
+
+Starting: *Create README_backup.md* (3/6)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/Claude-haiku-4.5/README_backup.md)
+
+Starting: *Generate comprehensive README.md* (4/6)
+
+Using "Replace String in File"
+
+
+```
+
+```
+
+
+Starting: *Create doc_validation.md* (5/6)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/Claude-haiku-4.5/doc_validation.md)
+
+Starting: *Create AUDIT_README.md* (6/6)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/Claude-haiku-4.5/AUDIT_README.md)
+
+Completed: *Create AUDIT_README.md* (6/6)
+
+## Documentation Audit Complete
+
+I've completed a comprehensive documentation audit of the Network Utils project. Here's what was delivered:
+
+### 📊 Audit Findings
+
+**8 missing documentation items identified:**
+- 6 High severity (developers cannot use the code without these)
+- 2 Medium severity (causes confusion and trial-and-error)
+
+### 📁 Files Generated
+
+1. **report.json** - Structured audit report with all findings, evidence, and severity classifications
+
+2. **README_backup.md** - Backup of the original 2-line README
+
+3. **README.md** - Comprehensive documentation (expanded from 2 to ~350 lines) including:
+   - Installation instructions with environment requirements
+   - Multiple usage examples (basic, custom config, error handling)
+   - Complete API reference for `fetchWithRetry` and `RetryOptions`
+   - Error handling scenarios and patterns
+   - Retry behavior details with timing examples
+   - Return value clarification (text vs JSON)
+   - Real-world examples and limitations
+
+4. **doc_validation.md** - Evidence mapping each missing item to its README section, demonstrating how developers can now understand and use the module
+
+5. **AUDIT_README.md** - Reviewer guide explaining the audit process, findings, and verification steps
+
+### ✅ Key Achievements
+
+- All documentation based strictly on actual code behavior from input.ts
+- No features or APIs invented
+- No source code modified
+- Complete coverage of all exported interfaces and functions
+- Progressive learning path from simple to advanced usage
+
+Made changes.
