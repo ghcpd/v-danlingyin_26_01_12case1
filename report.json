@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "total_missing_items": 8,
+    "high": 4,
+    "medium": 3,
+    "low": 1
+  },
+  "details": [
+    {
+      "id": 1,
+      "missing_doc_type": "Installation Guide",
+      "severity": "High",
+      "description": "No documentation on how to install, import, or set up the module in a project",
+      "why_required": "Developers cannot use the code without knowing how to import it or what environment requirements exist",
+      "code_evidence": "input.ts exports RetryOptions interface and fetchWithRetry function, but README.md provides no import instructions or environment requirements (e.g., fetch API availability)"
+    },
+    {
+      "id": 2,
+      "missing_doc_type": "Usage Example",
+      "severity": "High",
+      "description": "No code examples showing how to call fetchWithRetry with actual parameters",
+      "why_required": "Developers need to see practical examples to understand the correct function signature and usage patterns",
+      "code_evidence": "fetchWithRetry accepts url:string and options?:RetryOptions parameters, but README.md contains no example calls demonstrating parameter usage"
+    },
+    {
+      "id": 3,
+      "missing_doc_type": "API Documentation - fetchWithRetry",
+      "severity": "High",
+      "description": "No documentation of function parameters, return type, or behavior",
+      "why_required": "Developers need to know what parameters to pass, what the function returns, and when it throws errors",
+      "code_evidence": "Function signature shows 'async function fetchWithRetry(url: string, options?: RetryOptions): Promise<string>' but no documentation explains parameters, return value, or error conditions"
+    },
+    {
+      "id": 4,
+      "missing_doc_type": "API Documentation - RetryOptions",
+      "severity": "High",
+      "description": "No documentation of the RetryOptions interface properties and their meanings",
+      "why_required": "Developers need to know what configuration options are available and what they control",
+      "code_evidence": "RetryOptions interface defines 'retries?: number' and 'delayMs?: number' properties but their purpose, units, and default values are not documented"
+    },
+    {
+      "id": 5,
+      "missing_doc_type": "Default Values Documentation",
+      "severity": "Medium",
+      "description": "Default values for retries and delayMs are not documented",
+      "why_required": "Developers need to know what happens when options are omitted to predict default behavior",
+      "code_evidence": "Code shows 'const retries = options?.retries ?? 3' and 'const delayMs = options?.delayMs ?? 1000' but these defaults are not documented in README.md"
+    },
+    {
+      "id": 6,
+      "missing_doc_type": "Error Handling Documentation",
+      "severity": "Medium",
+      "description": "No documentation on what errors are thrown and when",
+      "why_required": "Developers need to know how to handle errors and what exceptions to expect",
+      "code_evidence": "Code throws 'new Error(\"Request failed\")' when !res.ok and re-throws caught errors after retries exhausted, but README.md doesn't document error scenarios"
+    },
+    {
+      "id": 7,
+      "missing_doc_type": "Edge Cases and Constraints",
+      "severity": "Medium",
+      "description": "No documentation of limitations like fixed delay, text-only response, or retry-on-all-errors behavior",
+      "why_required": "Developers need to understand edge cases to avoid unexpected behavior in production",
+      "code_evidence": "Code always uses 'res.text()' (not JSON), has fixed delay (not exponential), and retries on all errors including HTTP errors. These behaviors are not documented"
+    },
+    {
+      "id": 8,
+      "missing_doc_type": "Project Overview",
+      "severity": "Low",
+      "description": "Limited high-level description of project purpose and scope",
+      "why_required": "Helps developers quickly understand if this library meets their needs",
+      "code_evidence": "README.md only says 'Utility functions for network requests' without explaining the retry functionality or use cases"
+    }
+  ]
+}
