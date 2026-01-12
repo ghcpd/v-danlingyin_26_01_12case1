@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "total_missing_items": 8,
+    "high": 6,
+    "medium": 2,
+    "low": 0
+  },
+  "details": [
+    {
+      "id": 1,
+      "missing_doc_type": "Installation Instructions",
+      "severity": "High",
+      "description": "No documentation on how to install or include this module in a project. Missing package manager commands, dependency requirements, or setup steps.",
+      "why_required": "Developers cannot begin using the module without knowing how to install it or what dependencies are required (e.g., TypeScript, Node.js version, fetch polyfill if needed).",
+      "code_evidence": "File exports TypeScript interfaces and functions (export interface RetryOptions, export async function fetchWithRetry) but README.md contains no installation or setup instructions."
+    },
+    {
+      "id": 2,
+      "missing_doc_type": "Usage Examples",
+      "severity": "High",
+      "description": "No code examples demonstrating how to import and use the fetchWithRetry function. Developers don't know the correct import syntax or basic usage patterns.",
+      "why_required": "Without usage examples, developers must guess how to import the function, pass parameters, and handle responses. This leads to errors and wasted time.",
+      "code_evidence": "The fetchWithRetry function is exported (line 8-33 in input.ts) but no examples exist showing: import { fetchWithRetry } from './input' or how to call the function with different options."
+    },
+    {
+      "id": 3,
+      "missing_doc_type": "API Documentation - fetchWithRetry Function",
+      "severity": "High",
+      "description": "Missing comprehensive documentation for the main function including parameters, return type, behavior, and error conditions.",
+      "why_required": "Developers need to understand what parameters are required/optional, what the function returns (Promise<string>), and when errors are thrown to use it correctly.",
+      "code_evidence": "Function signature at line 8-10 shows: fetchWithRetry(url: string, options?: RetryOptions): Promise<string>. No documentation explains that it returns response text, retries on failure, or error handling behavior."
+    },
+    {
+      "id": 4,
+      "missing_doc_type": "API Documentation - RetryOptions Interface",
+      "severity": "High",
+      "description": "No documentation explaining the RetryOptions properties, their purpose, default values, or valid ranges.",
+      "why_required": "Developers need to know what retries and delayMs do, what their default values are (3 and 1000), and what values are acceptable to configure retry behavior properly.",
+      "code_evidence": "RetryOptions interface defined at lines 3-6 with retries?: number and delayMs?: number. Default values are set in code (line 11-12: retries ?? 3, delayMs ?? 1000) but not documented."
+    },
+    {
+      "id": 5,
+      "missing_doc_type": "Error Handling Documentation",
+      "severity": "High",
+      "description": "No documentation about what errors can be thrown, under what conditions, or how to handle them.",
+      "why_required": "Developers need to know when to expect errors (network failures, non-OK responses, retry exhaustion) to implement proper error handling with try-catch blocks.",
+      "code_evidence": "Code throws errors in multiple places: line 17 (throw new Error('Request failed')), line 22 (throw err after retries exhausted), line 28 (throw new Error('Unreachable')). No documentation warns developers about these error scenarios."
+    },
+    {
+      "id": 6,
+      "missing_doc_type": "Retry Behavior Documentation",
+      "severity": "High",
+      "description": "No explanation of how the retry mechanism works, including retry count logic and delay behavior.",
+      "why_required": "Developers need to understand that retries=3 means 3 attempts total (not 3 retries), delays are fixed (not exponential), and what triggers a retry vs immediate failure.",
+      "code_evidence": "Retry logic implemented in while loop (lines 13-27) with attempt counter. Code shows attempt < retries (line 13) meaning 'retries' is actually total attempts. Delay is fixed (line 25: setTimeout(r, delayMs)), not exponential. These behaviors are not documented."
+    },
+    {
+      "id": 7,
+      "missing_doc_type": "TypeScript/Environment Requirements",
+      "severity": "Medium",
+      "description": "No documentation about TypeScript version requirements, target environment (Node.js vs browser), or fetch API availability.",
+      "why_required": "Developers need to know if this works in Node.js (requires fetch polyfill in older versions), browsers only, or both. TypeScript users need proper type definitions configured.",
+      "code_evidence": "Code uses native fetch API (line 16: await fetch(url)) which is not available in Node.js < 18 without polyfills. TypeScript types used (interface, async/await) but no tsconfig or environment requirements documented."
+    },
+    {
+      "id": 8,
+      "missing_doc_type": "Return Value Documentation",
+      "severity": "Medium",
+      "description": "No documentation explaining that the function returns the response body as text, not JSON or other formats.",
+      "why_required": "Developers might expect JSON parsing or other formats. Understanding that res.text() is returned helps set correct expectations and explains why additional parsing may be needed.",
+      "code_evidence": "Function returns Promise<string> (line 10) and calls res.text() (line 19), but this is not documented. Developers might expect JSON parsing or Response object instead of plain text string."
+    }
+  ]
+}
