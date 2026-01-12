@@ -1,0 +1,74 @@
+{
+  "summary": {
+    "total_missing_items": 8,
+    "high": 4,
+    "medium": 1,
+    "low": 3
+  },
+  "details": [
+    {
+      "id": 1,
+      "missing_doc_type": "Setup Guide / Environment Requirements",
+      "severity": "High",
+      "description": "No documentation states runtime requirements or the need for a global `fetch` implementation (browser vs Node).",
+      "why_required": "Developers need to know which runtime and polyfills are required to run `fetchWithRetry`. Without this, the code may fail at runtime in some environments.",
+      "code_evidence": "input.ts: uses `fetch(url)` directly (e.g., `const res = await fetch(url);`)"
+    },
+    {
+      "id": 2,
+      "missing_doc_type": "Usage Example",
+      "severity": "High",
+      "description": "No code examples show how to import or call `fetchWithRetry`, or how to handle returned errors.",
+      "why_required": "Examples reduce trial-and-error and speed up integration into consuming projects.",
+      "code_evidence": "input.ts: exports `fetchWithRetry` (`export async function fetchWithRetry(...)`) but repository has no usage examples."
+    },
+    {
+      "id": 3,
+      "missing_doc_type": "API Description",
+      "severity": "High",
+      "description": "No formal API documentation describing parameters, defaults, return values, or errors thrown.",
+      "why_required": "To use the function correctly without reading the source, developers need explicit descriptions of `RetryOptions`, default values, return type, and error behavior.",
+      "code_evidence": "input.ts: defines `RetryOptions` and sets defaults `const retries = options?.retries ?? 3; const delayMs = options?.delayMs ?? 1000;`"
+    },
+    {
+      "id": 4,
+      "missing_doc_type": "Error handling and edge cases",
+      "severity": "High",
+      "description": "No documentation explains what errors are thrown, retry semantics, or unusual behavior (e.g., what happens when `retries = 0`).",
+      "why_required": "Understanding failure modes and edge cases is crucial to prevent surprising runtime behavior and to allow correct error handling by callers.",
+      "code_evidence": "input.ts: throws `Error('Request failed')` on non-ok response and `Error('Unreachable')` if loop doesn't execute; retry logic increments attempt on catch."
+    },
+    {
+      "id": 5,
+      "missing_doc_type": "Configuration explanation (defaults)",
+      "severity": "Medium",
+      "description": "Defaults for `retries` and `delayMs` are in code but not documented (3 and 1000ms respectively).",
+      "why_required": "Documenting defaults prevents confusion and allows developers to intentionally override behavior.",
+      "code_evidence": "input.ts: `const retries = options?.retries ?? 3; const delayMs = options?.delayMs ?? 1000;`"
+    },
+    {
+      "id": 6,
+      "missing_doc_type": "Testing instructions",
+      "severity": "Low",
+      "description": "No instructions or tests are present to validate behavior.",
+      "why_required": "Tests or test guidance help future maintainers verify behavior and avoid regressions.",
+      "code_evidence": "Repository has only `input.ts` and a minimal `README.md`; no test files were found."
+    },
+    {
+      "id": 7,
+      "missing_doc_type": "License information",
+      "severity": "Low",
+      "description": "No `LICENSE` file or licensing statements are present.",
+      "why_required": "Users must know licensing terms before reusing or publishing code based on this repo.",
+      "code_evidence": "No `LICENSE` file present in repository root."
+    },
+    {
+      "id": 8,
+      "missing_doc_type": "Project overview / README completeness",
+      "severity": "Low",
+      "description": "The repository's README provides a single-line title and no practical information for developers.",
+      "why_required": "A more complete README improves discoverability and provides immediate context for contributors and users.",
+      "code_evidence": "Existing `README.md` only contained: `# Network Utils\n\nUtility functions for network requests.`"
+    }
+  ]
+}

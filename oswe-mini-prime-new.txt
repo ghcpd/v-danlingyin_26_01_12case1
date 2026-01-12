@@ -1,0 +1,182 @@
+oswe-mini-prime-new     ：：
+User: Prompt:Documentation & Knowledge Evaluation — Missing Docs
+
+You are a senior technical writer and software engineer.
+
+Your task is to review the provided project files and identify missing documentation that is required for developers to correctly understand, set up, and use the project.
+
+This evaluation focuses on detecting documentation that SHOULD exist but is missing, rather than outdated or incorrect documentation.
+
+Your Responsibilities:
+
+Identify Missing Documentation
+Scan all provided files, including:
+Source code (*.ts, *.js)
+Configuration files
+Existing documentation files (if any)
+Identify documentation that is missing or insufficient, including but not limited to:
+Project overview
+Installation / setup instructions
+Usage examples
+API documentation
+Configuration explanation
+Error handling or edge cases
+For each missing documentation item, provide:
+
+Missing documentation type (e.g. Setup Guide, Usage Example, API Description)
+What information is missing
+Why this documentation is required
+Evidence from the code that proves this documentation is necessary
+Classify Severity For each missing documentation item, classify severity as:
+High:
+Developers cannot use or run the code correctly without it
+Medium:
+Developers can use the code but with confusion or trial-and-error
+Low:
+Helpful clarification but not required to use the code
+Produce Missing Documentation Generate the following files:
+README_backup.md
+
+If README.md exists → unchanged copy
+If README.md does NOT exist → explicitly state that no backup was created
+README.md
+
+A newly written documentation file that fills ALL identified documentation gaps
+Must be strictly based on existing code behavior
+Must NOT invent APIs, options, or features not present in the code
+Rules:
+
+Do NOT modify any source code
+Only add documentation
+Documentation must be accurate, concise, and developer-oriented
+Generate Documentation Audit Report (report.json)
+Use the following structure:
+
+{ "summary": { "total_missing_items": 0, "high": 0, "medium": 0, "low": 0 }, "details": [ { "id": 1, "missing_doc_type": "Usage Example", "severity": "High", "description": "", "why_required": "", "code_evidence": "" } ] }
+
+Generate Validation Evidence Produce a file named doc_validation.md containing:
+A list of missing documentation items
+The corresponding sections added to README.md
+A short explanation showing how a new developer can now:
+Understand the project
+Use the exposed APIs correctly
+Generate Reviewer README Produce AUDIT_README.md explaining:
+What was reviewed
+What documentation was missing
+What files were generated
+How reviewers can verify documentation completeness
+📌 Rules for the Model
+
+MUST NOT hallucinate features or APIs
+MUST NOT invent files that do not exist
+MUST base conclusions strictly on provided files
+MUST clearly justify why documentation is missing
+MUST keep code unchanged
+MUST keep output structured, minimal, and readable
+
+GitHub Copilot: Proceeding to scan repository files to identify missing documentation and gather evidence. I'll read input.ts and README.md next.
+
+Read [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-prime-new/input.ts)
+
+Read [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-prime-new/README.md)
+
+Perfect! The repository README is minimal and input.ts contains a single exported function that relies on a global `fetch` and has an unexpected edge case when `retries` is 0. My next step is to create a backup of the existing README.md and add comprehensive documentation and audit files.
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-prime-new/README_backup.md)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-prime-new/README.md)
+
+Proceeding to replace the existing README.md with the newly written comprehensive README.
+
+Using "Replace String in File"
+
+
+```
+
+```
+I'm going to create the audit files (`report.json`, `doc_validation.md`, `AUDIT_README.md`) that summarize the missing documentation, show evidence, and map added README sections to each missing item.
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-prime-new/report.json)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-prime-new/doc_validation.md)
+
+Created [](file:///c%3A/Users/v-danlingyin/Documents/microsoft_projects_files/bugBash/26.1/1.12/case1/oswe-mini-prime-new/AUDIT_README.md)
+
+Perfect! The README backup, the expanded README.md, and the audit files are created; I documented environment requirements, usage, API semantics, error/edge cases, testing guidance, and license notes. My next step is to help you verify or iterate on any section you'd like improved—tell me which part you'd like expanded or to add tests for.## Summary — Documentation audit complete ✅
+
+**What I did**
+- Reviewed input.ts and the existing README.md.
+- Identified documentation gaps (8 items) and their severities.
+- Created a backup and replaced the README with detailed, accurate documentation derived strictly from the code.
+- Added an audit report and validation artifacts.
+
+---
+
+## Missing documentation found (brief) 🔍
+
+- **Setup / Environment Requirements** — High  
+  What’s missing: guidance on runtime and global `fetch` requirement.  
+  Evidence: input.ts calls `fetch(url)` directly (no polyfill logic).
+
+- **Usage Example** — High  
+  What’s missing: example import and call pattern and error handling.  
+  Evidence: only `export async function fetchWithRetry(...)` exists, no examples.
+
+- **API Description** — High  
+  What’s missing: formal parameter and return descriptions, defaults, and errors.  
+  Evidence: `RetryOptions` interface and default assignments in code:
+  - `const retries = options?.retries ?? 3;`
+  - `const delayMs = options?.delayMs ?? 1000;`
+
+- **Error handling & edge cases** — High  
+  What’s missing: explicit note about errors thrown and surprising behavior (e.g., `retries = 0`).  
+  Evidence: throws `Error("Request failed")` for non-ok responses and `Error("Unreachable")` if loop doesn't run.
+
+- **Configuration explanation (defaults)** — Medium  
+  What’s missing: stated defaults and how to override them.  
+  Evidence: default assignments above.
+
+- **Testing instructions** — Low  
+  What’s missing: guidance or tests for validating retry and error behavior.  
+  Evidence: No test files present.
+
+- **License information** — Low  
+  What’s missing: LICENSE or license statement.  
+  Evidence: No `LICENSE` file in repo.
+
+- **Project overview / README completeness** — Low  
+  What’s missing: a concise developer-oriented README.  
+  Evidence: original README contained only a one-line description.
+
+---
+
+## Files created 🔧
+
+- README_backup.md — **unchanged copy** of original README.
+- README.md — **new, expanded** documentation (Overview, Requirements, Installation/Use, API Reference, Behavior & Edge Cases, Testing guidance, Other notes).
+- report.json — structured list of missing documentation items, severities, and code evidence.
+- doc_validation.md — mapping of missing items to README sections and brief validation steps.
+- AUDIT_README.md — short guide for reviewers to verify documentation completeness.
+
+---
+
+## How you can validate (quick) ✅
+
+1. Open README.md and confirm it contains:
+   - Requirements (notes about global `fetch` and Node 18+ or polyfill),
+   - Installation / Use example,
+   - API Reference with defaults and error behavior,
+   - Behavior & Edge Cases (notably `retries: 0`).
+2. Run the example in an environment with working `fetch` (browser or Node 18+).
+3. Test edge case: call `fetchWithRetry(url, { retries: 0 })` and confirm it throws `Error("Unreachable")` as documented.
+4. Inspect report.json and doc_validation.md to ensure each missing item is addressed.
+
+---
+
+If you'd like, I can:
+- Expand the README with more examples (e.g., a failing endpoint demo), or
+- Add a basic test file that validates retry behavior (requires your sign-off to add test dependencies).
+
+Would you like me to add tests or a demo script next?
+
+Made changes.
